@@ -1,19 +1,37 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+
+import Header from './components/header';
+import Home from './components/home';
+import PublicPage from './components/public_page';
+import PrivatePage from './components/private_page';
+import rootReducer from './reducers/index';
+
+import {createStore, applyMiddleware} from 'redux';
+import {Provider} from 'react-redux';
+import {Router, Route, IndexRedirect, browserHistory} from 'react-router';
+
+const createStoreWithMiddleware = applyMiddleware()(createStore);
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+      <Provider store={createStoreWithMiddleware(rootReducer)}>
+        <div className="App">
+          <div className="App-header">
+            <Header/>
+          </div>
+          <div>
+            <Router history={browserHistory}>
+              <Route path="/" component={Home}>
+                <IndexRedirect to="/public" />
+                <Route path="public" component={PublicPage}></Route>
+                <Route path="private" component={PrivatePage}></Route>
+              </Route>
+            </Router>
+          </div>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      </Provider>
     );
   }
 }
