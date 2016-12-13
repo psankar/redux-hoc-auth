@@ -24,7 +24,7 @@ class App extends Component {
           <div>
             <Router history={browserHistory}>
               <Route path="/" component={Home}>
-                <IndexRedirect to="/public" />
+                <IndexRedirect to="/public"/>
                 <Route path="public" component={PublicPage}></Route>
                 <Route path="private" component={PrivatePage}></Route>
               </Route>
