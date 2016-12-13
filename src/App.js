@@ -7,6 +7,7 @@ import PublicPage from './components/public_page';
 import PrivatePage from './components/private_page';
 import rootReducer from './reducers/index';
 
+import requireAuth from './components/hoc/require_authentication';
 import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import {Router, Route, IndexRedirect, browserHistory} from 'react-router';
@@ -26,7 +27,7 @@ class App extends Component {
               <Route path="/" component={Home}>
                 <IndexRedirect to="/public"/>
                 <Route path="public" component={PublicPage}></Route>
-                <Route path="private" component={PrivatePage}></Route>
+                <Route path="private" component={requireAuth(PrivatePage)}></Route>
               </Route>
             </Router>
           </div>
